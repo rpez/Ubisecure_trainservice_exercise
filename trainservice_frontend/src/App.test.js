@@ -2,8 +2,8 @@ import React from 'react'
 import { mount } from 'enzyme'
 import App from './App'
 import Blog from './components/Blog'
-jest.mock('./services/__mocks__/blogs')
 import blogService from './services/__mocks__/blogs'
+jest.mock('./services/__mocks__/blogs')
 
 describe('<App />', () => {
     let app

@@ -1,8 +1,6 @@
 import React from 'react'
-import Blog from './components/Blog'
-import BlogForm from './components/BlogForm'
-import Togglable from './components/Togglable'
-import blogService from './services/blogs'
+import Train from './components/Train'
+import trainService from './services/trains'
 import loginService from './services/login'
 import Notification from './components/Notification'
 
@@ -10,7 +8,7 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      blogs: [],
+      trains: [],
       showAll: true,
       message: null,
       error: null,
@@ -21,15 +19,17 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    blogService.getAll().then(blogs =>
-      this.setState({ blogs })
-    )
+    trainService.getAll().then(res => {
+      this.setState({
+        trains: res,
+      })
+    })
 
     const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       this.setState({ user })
-      blogService.setToken(user.token)
+      trainService.setToken(user.token)
     }
   }
 
@@ -42,7 +42,7 @@ class App extends React.Component {
       })
 
       window.localStorage.setItem('loggedNoteappUser', JSON.stringify(user))
-      blogService.setToken(user.token)
+      trainService.setToken(user.token)
       this.setState({ username: '', password: '', user })
       this.notify('login successful', false)
     } catch (exception) {
@@ -71,53 +71,7 @@ class App extends React.Component {
     this.setState({ showAll: !this.state.showAll })
   }
 
-  updateBlogs = (blog) => {
-    this.setState({ blogs: this.state.blogs.concat(blog) })
-  }
-
-  updateLikes = (blog) => {
-    return async () => {
-      try {
-        const blogObject = {
-          _id: blog._id,
-          title: blog.title,
-          author: blog.author,
-          url: blog.url,
-          likes: blog.likes + 1,
-          user: blog.user._id
-        }
-
-        const newBlog = await blogService.update(blog._id, blogObject)
-
-        this.setState({
-          blogs: this.state.blogs.map(x => x._id !== newBlog._id ? x : newBlog)
-        })
-      } catch (exception) {
-        console.log(exception)
-      }
-    }
-  }
-
-  deleteBlog = (id) => {
-    return async () => {
-      try {
-        const blog = this.state.blogs.filter(x => x._id === id)
-
-        if (window.confirm(`delete ${blog.title} by ${blog.author}?`)) {
-          await blogService.deleteBlog(id)
-          this.setState({ blogs: this.state.blogs.filter(x => x._id !== id) })
-          this.notify('blog deleted', false)
-        }
-        else this.notify('deletion cancelled', false)
-      } catch (exception) {
-        console.log(exception)
-        this.notify('delete not successful', true)
-      }
-    }
-  }
-
   render() {
-
     const loginForm = () => (
       <div>
         <h1>Log in to application</h1>
@@ -146,18 +100,6 @@ class App extends React.Component {
       </div>
     )
 
-    const blogForm = () => (
-      <div>
-        <h1>blogs</h1>
-        <p>{this.state.user.name} logged in</p>
-        <button onClick={() => window.localStorage.removeItem('loggedNoteappUser')}>logout</button>
-        <h2>create new</h2>
-        <Togglable buttonLabel="create new" >
-          <BlogForm updateBlogs={this.updateBlogs} notify={this.notify} />
-        </Togglable>
-      </div>
-    )
-
     return (
       <div>
         <Notification message={this.state.message} isError={this.state.error} />
@@ -166,11 +108,8 @@ class App extends React.Component {
           loginForm() :
           <div>
             <div>
-              {blogForm()}
-            </div>
-            <div>
-              {this.state.blogs.sort((a, b) => b.likes - a.likes).map(blog =>
-                <Blog key={blog._id} blog={blog} updateLikes={this.updateLikes} deleteBlog={this.deleteBlog} />
+              {this.state.trains.map(train =>
+                <Train key={train._id} train={train} />
               )}
             </div>
           </div>
