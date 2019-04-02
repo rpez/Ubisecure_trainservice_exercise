@@ -4,28 +4,37 @@ class Train extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      visible: false
+      train: {
+        _id: String,
+        name: String,
+        destination: String,
+        speed: Number,
+        coordinates: { lat: Number, lon: Number }
+      }
     }
-    this.train = props.train
+    this.state.train = props.train
   }
 
-  toggleVisibility = () => {
-    this.setState({ visible: !this.state.visible })
+  componentWillReceiveProps({ train }) {
+    this.setState({ train })
   }
 
   render() {
-    const trainStyle = {
-      paddingTop: 10,
-      paddingLeft: 2,
-      border: 'solid',
-      borderWidth: 1,
-      marginBottom: 5
-    }
+    // const trainStyle = {
+    //   paddingTop: 10,
+    //   paddingLeft: 2,
+    //   border: 'solid',
+    //   borderWidth: 1,
+    //   marginBottom: 5
+    // }
 
     return (
-      <div style={trainStyle}>
-          {this.train._id}
-      </div>
+      <tr>
+        <th>{this.state.train.name}</th>
+        <th>{this.state.train.destination}</th>
+        <th>{this.state.train.speed}</th>
+        <th>{this.state.train.coordinates.lat} {this.state.train.coordinates.lon}</th>
+      </tr>
     )
   }
 }

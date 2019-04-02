@@ -9,7 +9,6 @@ class App extends React.Component {
     super(props)
     this.state = {
       trains: [],
-      trainsUpdated: false,
       showAll: true,
       message: null,
       error: null,
@@ -19,13 +18,17 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {
+  updateTrains() {
     trainService.getAll().then(res => {
+      console.log("afa")
       this.setState({
         trains: res,
-        trainsUpdated: true
       })
     })
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(() => this.updateTrains(), 1000);
 
     const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
     if (loggedUserJSON) {
@@ -33,6 +36,10 @@ class App extends React.Component {
       this.setState({ user })
       trainService.setToken(user.token)
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
   }
 
   login = async (event) => {
@@ -73,31 +80,6 @@ class App extends React.Component {
     this.setState({ showAll: !this.state.showAll })
   }
 
-  updateTrains = () => {
-    if (this.state.trainsUpdated === false) {
-      trainService.getAll().then(res => {
-        this.setState({
-          trains: res,
-          trainsUpdated: true
-        })
-      })
-      this.setState({
-        trainsUpdated: true
-      })
-      setTimeout(() => {
-        this.setState({ trainsUpdated: false })
-      }, 5000)
-    }
-
-    return (
-      <div>
-        {this.state.trains.map(train =>
-          <Train key={train._id} train={train} />
-        )}
-      </div>
-    )
-  }
-
   render() {
     const loginForm = () => (
       <div>
@@ -134,7 +116,13 @@ class App extends React.Component {
         {this.state.user === null ?
           loginForm() :
           <div>
-            {this.updateTrains()}
+            <table>
+              <tbody>
+                {this.state.trains.map(train =>
+                  <Train key={train._id} train={train} />
+                )}
+              </tbody>
+            </table>
           </div>
         }
 
