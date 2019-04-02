@@ -1,8 +1,10 @@
-POST http://localhost:3003/api/users 
+POST http://localhost:3002/api/users 
 content-type: application/json
 
 {
-  "username": "mluukkai",
-  "password": "mluukkai",
-  "name": "Matti Luukkainen"
+  "username": "ubisecure",
+  "password": "ubisecure",
+  "firstname": "Teppo",
+  "lastname": "Testaaja",
+  "email": "testaaja@test.fi"
 }

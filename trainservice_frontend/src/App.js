@@ -20,7 +20,6 @@ class App extends React.Component {
 
   updateTrains() {
     trainService.getAll().then(res => {
-      console.log("afa")
       this.setState({
         trains: res,
       })
@@ -30,10 +29,11 @@ class App extends React.Component {
   componentDidMount() {
     this.interval = setInterval(() => this.updateTrains(), 1000);
 
-    const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
+    const loggedUserJSON = window.localStorage.getItem('loggedTrainappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       this.setState({ user })
+
       trainService.setToken(user.token)
     }
   }
@@ -50,7 +50,7 @@ class App extends React.Component {
         password: this.state.password
       })
 
-      window.localStorage.setItem('loggedNoteappUser', JSON.stringify(user))
+      window.localStorage.setItem('loggedTrainappUser', JSON.stringify(user))
       trainService.setToken(user.token)
       this.setState({ username: '', password: '', user })
       this.notify('login successful', false)
@@ -60,6 +60,10 @@ class App extends React.Component {
         this.setState({ error: null })
       }, 5000)
     }
+  }
+
+  logout = () => {
+    window.localStorage.removeItem('loggedTrainappUser')
   }
 
   notify = (message, isError) => {
@@ -83,7 +87,7 @@ class App extends React.Component {
   render() {
     const loginForm = () => (
       <div>
-        <h1>Log in to application</h1>
+        <h1>Log in to train service</h1>
 
         <form onSubmit={this.login}>
           <div>
@@ -116,6 +120,12 @@ class App extends React.Component {
         {this.state.user === null ?
           loginForm() :
           <div>
+            <div>
+              <h1>Train service</h1>
+              <p>{this.state.user.firstname} logged in</p>
+              <button onClick={this.logout()}>logout</button>
+            </div>
+            <h3>Trains</h3>
             <table>
               <tbody>
                 {this.state.trains.map(train =>
