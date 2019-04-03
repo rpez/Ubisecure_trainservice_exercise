@@ -29,6 +29,7 @@ class App extends React.Component {
 
   componentDidMount() {
     // update train list each second
+    this.updateTrains()
     this.interval = setInterval(() => this.updateTrains(), 1000);
 
     // get token (if there is any)

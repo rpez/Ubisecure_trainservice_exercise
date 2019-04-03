@@ -1,4 +1,4 @@
-const blogs = [
+let trains = [
     {
         coordinates: {
             lat: 50,
@@ -46,11 +46,28 @@ const blogs = [
 ]
 
 const getAll = () => {
-    return Promise.resolve(blogs)
+    return Promise.resolve(trains)
 }
 
-const put = () => {
+const put = (newTrain) => {
+    const train = {
+        _id: newTrain._id,
+        name: newTrain.name,
+        destination: newTrain.destination,
+        speed: newTrain.speed,
+        coordinates: { lat: newTrain.coordinates[0], lon: newTrain.coordinates[1] }
+    }
 
+    const existing = trains.find(x => x._id === train._id)
+    if (existing !== undefined) {
+        const newList = trains.filter(x => x._id !== train._id)
+        trains = newList.concat(train)
+    }
+    else {
+        trains = trains.concat(train)
+    }
+    
+    return Promise.resolve(train)
 }
 
-export default { getAll, blogs, put }
+export default { getAll, trains, put }
