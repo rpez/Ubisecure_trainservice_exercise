@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 const loginRouter = require('express').Router()
 const User = require('../models/user')
 
+// checks login credentials
 loginRouter.post('/', async (request, response) => {
   const body = request.body
 
@@ -22,7 +23,7 @@ loginRouter.post('/', async (request, response) => {
 
   const token = jwt.sign(userForToken, process.env.SECRET)
 
-  response.status(200).send({ token, username: user.username, name: user.name })
+  response.status(200).send({ token, username: user.username, firstname: user.firstname, lastname: user.lastname, email: user.email })
 })
 
 module.exports = loginRouter

@@ -7,6 +7,7 @@ usersRouter.get('/', async (request, response) => {
   response.send(users.map(User.format))
 })
 
+// creates new user
 usersRouter.post('/', async (request, response) => {
   try {
     const { username, password, firstname, lastname, email } = request.body

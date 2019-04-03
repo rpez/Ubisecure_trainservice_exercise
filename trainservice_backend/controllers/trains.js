@@ -1,12 +1,14 @@
 const trainRouter = require('express').Router()
 const Train = require('../models/train')
 
+// returns all the trains
 trainRouter.get('/', async (request, response) => {
   const trains = await Train.find({})
 
   response.json(trains)
 })
 
+// constructs a new train or updates old one according to the PUT request
 trainRouter.put('/:id/location', async (request, response) => {
   const { name, destination, speed } = request.body
   const lat = request.body.coordinates[0]

@@ -18,6 +18,7 @@ class App extends React.Component {
     }
   }
 
+  // gets the train info from the api
   updateTrains() {
     trainService.getAll().then(res => {
       this.setState({
@@ -27,8 +28,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    // update train list each second
     this.interval = setInterval(() => this.updateTrains(), 1000);
 
+    // get token (if there is any)
     const loggedUserJSON = window.localStorage.getItem('loggedTrainappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
@@ -39,9 +42,11 @@ class App extends React.Component {
   }
 
   componentWillUnmount() {
+    // stop trainlist updating when unmount
     clearInterval(this.interval)
   }
 
+  // check login credentials and handle token
   login = async (event) => {
     event.preventDefault()
     try {
@@ -50,6 +55,7 @@ class App extends React.Component {
         password: this.state.password
       })
 
+      console.log(JSON.stringify(user))
       window.localStorage.setItem('loggedTrainappUser', JSON.stringify(user))
       trainService.setToken(user.token)
       this.setState({ username: '', password: '', user })
@@ -62,10 +68,14 @@ class App extends React.Component {
     }
   }
 
+  // remove token
   logout = () => {
-    window.localStorage.removeItem('loggedTrainappUser')
+    return (
+      window.localStorage.removeItem('loggedTrainappUser')
+    )
   }
 
+  // for notifications
   notify = (message, isError) => {
     this.setState({
       error: isError,
@@ -123,7 +133,7 @@ class App extends React.Component {
             <div>
               <h1>Train service</h1>
               <p>{this.state.user.firstname} logged in</p>
-              <button onClick={this.logout()}>logout</button>
+              <button onClick={() => this.logout()}>logout</button>
             </div>
             <h3>Trains</h3>
             <table>
