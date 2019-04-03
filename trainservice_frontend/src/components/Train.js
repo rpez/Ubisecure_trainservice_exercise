@@ -30,10 +30,10 @@ class Train extends React.Component {
 
     return (
       <tr>
-        <th>{this.state.train.name}</th>
-        <th>{this.state.train.destination}</th>
-        <th>{this.state.train.speed}</th>
-        <th>{this.state.train.coordinates.lat} {this.state.train.coordinates.lon}</th>
+        <th className="train_name">{this.state.train.name}</th>
+        <th className="train_destination">{this.state.train.destination}</th>
+        <th className="train_speed">{this.state.train.speed}</th>
+        <th className="train_coordinates">{this.state.train.coordinates.lat} {this.state.train.coordinates.lon}</th>
       </tr>
     )
   }
