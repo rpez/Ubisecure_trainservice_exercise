@@ -2,9 +2,9 @@ POST http://localhost:3002/api/users
 content-type: application/json
 
 {
-  "username": "ubisecure",
-  "password": "ubisecure",
-  "firstname": "Teppo",
-  "lastname": "Testaaja",
-  "email": "testaaja@test.fi"
+  "username": "ubisecure2",
+  "password": "ubisecure2",
+  "firstname": "Teemu",
+  "lastname": "Testinen",
+  "email": "testaaja2@test.fi"
 }

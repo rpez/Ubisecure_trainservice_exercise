@@ -70,8 +70,9 @@ class App extends React.Component {
 
   // remove token
   logout = () => {
+    window.localStorage.removeItem('loggedTrainappUser')
     return (
-      window.localStorage.removeItem('loggedTrainappUser')
+      window.location.reload()
     )
   }
 
@@ -132,7 +133,8 @@ class App extends React.Component {
           <div>
             <div>
               <h1>Train service</h1>
-              <p>{this.state.user.firstname} logged in</p>
+              <p>{this.state.user.firstname} {this.state.user.lastname} logged in</p>
+              <p>{this.state.user.email}</p>
               <button onClick={() => this.logout()}>logout</button>
             </div>
             <h3>Trains</h3>
