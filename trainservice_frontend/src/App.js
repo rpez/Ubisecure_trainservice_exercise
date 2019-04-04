@@ -3,7 +3,7 @@ import Train from './components/Train'
 import trainService from './services/trains'
 import loginService from './services/login'
 import Notification from './components/Notification'
-import TrainIndicator from './components/TrainIndicator'
+import Map from './components/Map'
 
 class App extends React.Component {
   constructor(props) {
@@ -147,7 +147,7 @@ class App extends React.Component {
                 )}
               </tbody>
             </table>
-            <TrainIndicator />
+            <Map trains={this.state.trains} />
           </div>
         }
       </div >

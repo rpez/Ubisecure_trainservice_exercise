@@ -1,9 +1,9 @@
-PUT http://localhost:3001/api/trains/1111/location
+PUT http://localhost:3001/api/trains/11111/location
 content-type: application/json
 
 {
   "name": "Intercity 3",
   "destination": "Tampere",
   "speed": 65.3,
-  "coordinates": [32, 2]
+  "coordinates": [65, 25]
 }
