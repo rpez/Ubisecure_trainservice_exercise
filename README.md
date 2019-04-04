@@ -7,8 +7,8 @@ HUOM! Jotta tietokantaan saa yhteyden, backend-kansion juuressa tulee olla oikea
 Testauksenne takia olen poistanut sen .gitignoresta, vaikka näin ei yleensä tulisi tehdä.
 
 Frontend käynnistyy oletusarvoisesti osoitteeseen localhost:3000 ja backend localhost:3001.
-Helpoin tapa käynnistää ne on 'npm start'. Jos jokin ei toimi voin olla unohtanut portiksi 3002,
-koska se on development portti.
+'npm install' tulee ajaa sekä trainservice_backend- että trainservice_frontend-kansiossa.
+Helpoin tapa käynnistää ne on 'npm start' (sekin molemmissa kansioissa).
 
 Backendin alta löytyy request-kansio jonka sisällä ovat tarvittavat REST-kutsut.
 Uuden käyttäjän ja junan luominen/päivittäminen tapahtuu niiden mukaisella tavalla.

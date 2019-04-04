@@ -1,1 +1,0 @@
-REMOVE http://localhost:3001/api/trains/11111/location
