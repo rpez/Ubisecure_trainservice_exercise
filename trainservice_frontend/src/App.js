@@ -4,6 +4,7 @@ import trainService from './services/trains'
 import loginService from './services/login'
 import Notification from './components/Notification'
 import Map from './components/Map'
+import Togglable from './components/Togglable';
 
 class App extends React.Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class App extends React.Component {
   componentDidMount() {
     // update train list each second
     this.updateTrains()
-    this.interval = setInterval(() => this.updateTrains(), 1000);
+    this.interval = setInterval(() => this.updateTrains(), 5000);
 
     // get token (if there is any)
     const loggedUserJSON = window.localStorage.getItem('loggedTrainappUser')
@@ -140,13 +141,15 @@ class App extends React.Component {
               <button onClick={() => this.logout()}>logout</button>
             </div>
             <h3>Trains</h3>
-            <table>
-              <tbody>
-                {this.state.trains.map(train =>
-                  <Train key={train._id} train={train} />
-                )}
-              </tbody>
-            </table>
+            <Togglable buttonLabel="Show trains">
+              <table>
+                <tbody>
+                  {this.state.trains.map(train =>
+                    <Train key={train._id} train={train} />
+                  )}
+                </tbody>
+              </table>
+            </Togglable>
             <Map trains={this.state.trains} />
           </div>
         }

@@ -4,10 +4,12 @@ import TrainIndicator from './TrainIndicator'
 
 const AnyReactComponent = ({ text }) => <TrainIndicator>{text}</TrainIndicator>;
 
+// Google maps component
 class Map extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            // "middle" of Finland
             center: {
                 lat: 63.9241,
                 lng: 25.7482

@@ -1,5 +1,6 @@
 import React from 'react'
 
+// Component for train list elements
 class Train extends React.Component {
   constructor(props) {
     super(props)
@@ -20,20 +21,24 @@ class Train extends React.Component {
   }
 
   render() {
-    // const trainStyle = {
-    //   paddingTop: 10,
-    //   paddingLeft: 2,
-    //   border: 'solid',
-    //   borderWidth: 1,
-    //   marginBottom: 5
-    // }
+    const trainStyle = {
+      paddingRight: 20
+    }
+    const titleStyle = {
+      color: 'grey'
+    }
+
 
     return (
       <tr>
-        <th className="train_name">{this.state.train.name}</th>
-        <th className="train_destination">{this.state.train.destination}</th>
-        <th className="train_speed">{this.state.train.speed}</th>
-        <th className="train_coordinates">{this.state.train.coordinates.lat} {this.state.train.coordinates.lon}</th>
+        <th style={titleStyle}>Name:</th>
+        <th style={trainStyle} className="train_name">{this.state.train.name}</th>
+        <th style={titleStyle}>Destination:</th>
+        <th style={trainStyle} className="train_destination">{this.state.train.destination}</th>
+        <th style={titleStyle}>Speed:</th>
+        <th style={trainStyle} className="train_speed">{this.state.train.speed}</th>
+        <th style={titleStyle}>Coordinates:</th>
+        <th style={trainStyle} className="train_coordinates">{this.state.train.coordinates.lat} {this.state.train.coordinates.lon}</th>
       </tr>
     )
   }
